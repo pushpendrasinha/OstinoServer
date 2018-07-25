@@ -26,14 +26,14 @@ app.use(logger('dev'));
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(bodyParser.json({limit: '200mb'}));
-app.use(express.static(path.resolve('../client/dist')));
+app.use(express.static(path.resolve('../ostinohealth/client/dist')));
 
 app.use('/api/user', user);
 app.use('/api/product', product);
 app.use('/api/common', common);
 
 
-app.use('*', express.static(path.resolve('../client/dist')));
+app.use('*', express.static(path.resolve('../ostinohealth/client/dist')));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
