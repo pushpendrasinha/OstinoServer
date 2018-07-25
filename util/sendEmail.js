@@ -19,7 +19,7 @@ function sendMail(message) {
     return new Promise((resolve, reject) => {
         transporter.sendMail({
             from: 'medthatheals@gmail.com',
-            to: 'aasheeshbareja@gmail.com',
+            to: 'surajitbanerjee@ostinohealth.com',
             subject: 'Feedback',
             html: message
 
