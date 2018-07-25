@@ -1,0 +1,13 @@
+{
+    "secret": "med%ostino?R",
+    "mongo": {
+        "url": "mongodb://localhost:27017/Ostinohealth"
+    },
+    "smtpserver": {
+        "host": "email-smtp.us-east-1.amazonaws.com",
+        "port": 587,
+        "user": "AKIAIVCORE3NYKSQ3YWA",
+        "pass": "AuuGUtU76w7NR73586WMUmmPFdiPMnuHcFV9rs9tGoje"
+    }
+
+}
