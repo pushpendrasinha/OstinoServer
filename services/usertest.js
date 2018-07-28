@@ -35,115 +35,55 @@ module.exports = {
     },
     register: async (data) => {
         console.log("register data in service " + JSON.stringify(data, null, 2));
-        data.password = bcrypt.hashSync(data.password, 8);
         try {
-          await new userModel(data).save();
-            return({msg : "success"});
+            data.password = bcrypt.hashSync(data.password, 8);
+            await new userModel(data).save();
+            return({success: true, msg: "You are registered successfully"});
         } catch(e) {
-            console.log("err in save " + e);
-            return({msg : "failure with reason "  +e});
+            return({success: false, msg: e});
         }
-
-
-    },
+        },
     changePassword: async (userId, data) => {
+        console.log("userid is " + userId);
         var user = await userModel.findOne({_id: userId});
-        var passwordIsValid = bcrypt.compareSync(data.oldpassword, user.password);
+        var passwordIsValid = bcrypt.compareSync(data.currentPassword, user.password);
         if(passwordIsValid) {
-            var password = bcrypt.hashSync(data.newPassword, 8);
-          user.password = password;
-          await user.save();
-            return {msg: "password changed successfully"};
+            if(data.currentPassword == data.newPassword) {
+                return {success: false, msg: "New password cannot be same as current password"};
+            } else {
+                var password = bcrypt.hashSync(data.newPassword, 8);
+                user.password = password;
+                await user.save();
+                return {success: true, msg: "password changed successfully"};
+            }
+
         } else {
-            return {msg: "current password is invalid"}
+            return {success: false, msg: "current password is invalid"}
         }
 
     },
     getuser: async (userId) => {
-        var user = await userModel.findOne({_id: userId});
-        return user;
+        try {
+            var user = await userModel.findOne({_id: userId});
+            return {success: true, user: user};
+        } catch(e) {
+            return { success: false, msg: e};
+        }
+
 
         },
-    addAddress: async (userId, address) => {
-        var user = await userModel.findOne({"_id": userId});
-       // user.address.unshift({"name": "hello", "contact":"9034856075"});
-        user.address.unshift(address);
-       await user.save(function(err, result) {
-           if(err) {
-               console.log("err in adress update ");
-               return err;
-           } else {
-               console.log("address update result " + JSON.stringify(result, null, 2));
-               return {"msg" : "address updated successfully"};
-           }
-       });
- /*await userModel.update({"name": "suraj"}, {$push :  {address: {"name": "aasheesh", "contact":"9034856075"}} }, function(err, result) {
-     if(err) {
-         console.log("err in adress update ");
-         return err;
-     } else {
-         console.log("address update result " + JSON.stringify(result, null, 2));
-         return {"msg" : "address updated successfully"};
-     }
- })*/
-},
-    updateAddress: async (userId, address) => {
-        var user = await userModel.findOne({"_id": userId});
-        // user.address.unshift({"name": "hello", "contact":"9034856075"});
-        user.address.unshift(address);
-        await user.save(function(err, result) {
-            if(err) {
-                console.log("err in adress update ");
-                return err;
-            } else {
-                console.log("address update result " + JSON.stringify(result, null, 2));
-                return {"msg" : "address updated successfully"};
-            }
-        });
-        /*await userModel.update({"name": "suraj"}, {$push :  {address: {"name": "aasheesh", "contact":"9034856075"}} }, function(err, result) {
-            if(err) {
-                console.log("err in adress update ");
-                return err;
-            } else {
-                console.log("address update result " + JSON.stringify(result, null, 2));
-                return {"msg" : "address updated successfully"};
-            }
-        })*/
-    },
-    deleteAddress: async (userId, address) => {
-        var user = await userModel.findOne({"_id": userId});
-        // user.address.unshift({"name": "hello", "contact":"9034856075"});
-        user.address.unshift(address);
-        await user.save(function(err, result) {
-            if(err) {
-                console.log("err in adress update ");
-                return err;
-            } else {
-                console.log("address update result " + JSON.stringify(result, null, 2));
-                return {"msg" : "address updated successfully"};
-            }
-        });
-        /*await userModel.update({"name": "suraj"}, {$push :  {address: {"name": "aasheesh", "contact":"9034856075"}} }, function(err, result) {
-            if(err) {
-                console.log("err in adress update ");
-                return err;
-            } else {
-                console.log("address update result " + JSON.stringify(result, null, 2));
-                return {"msg" : "address updated successfully"};
-            }
-        })*/
-    },
-    editProfile: async (userId, data) => {
-        userModel.update({ _id: userId }, { $set: data}, (err, doc) => {
-            if(err) {
-                return {error: err};
-            }
-            return {msg: "updated successfully"};
-        });
 
-    },
-    getAddresses: async (userId) => {
-      var result =  await userModel.findOne({_id: userId}).select("address -_id");
-      return result;
+    editProfile: async (userId, data) => {
+        try {
+            delete data.email;
+            delete data.password;
+           await userModel.updateOne({ _id: userId }, data);
+           return {success: true, msg: "profile updated successfully"}
+           } catch(e) {
+            return {success: false, msg: e}
+        }
+
+
     }
+
 }

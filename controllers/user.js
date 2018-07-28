@@ -20,7 +20,7 @@ module.exports = {
         res.status(200).send(result);
     },
     changePassword: async (req, res) => {
-var credentials = req.body.credentials;
+var credentials = req.body;
 var userId = req.userId;
 var result =  await userService.changePassword(userId, credentials);
         res.status(200).send(result);
@@ -53,13 +53,13 @@ var result =  await userService.changePassword(userId, credentials);
         var userId = req.userId;
         console.log("userid in getuser in controller " + userId);
         var result = await userService.getuser(userId);
-        delete result.password;
+        delete result.user.password;
         console.log("get user result is  " + JSON.stringify(result, null, 2));
-        res.status(200).send({user: result});
+        res.status(200).send(result);
 
     },
     editProfile: async (req, res) => {
-        var data = req.body.data;
+        var data = req.body;
         var userId = req.userId;
         var result =  await userService.editProfile(userId, data);
         res.status(200).send(result);

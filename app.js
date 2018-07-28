@@ -10,6 +10,7 @@ var product = require('./routes/product');
 var order = require('./routes/order');
 var user = require('./routes/user');
 var common = require('./routes/common');
+var address = require('./routes/address');
 
 var app = express();
 var allowCrossDomain = function(req, res, next) {
@@ -31,6 +32,7 @@ app.use(express.static(path.resolve('../ostinohealth/client/dist')));
 app.use('/api/user', user);
 app.use('/api/product', product);
 app.use('/api/common', common);
+app.use('/api/address', address);
 
 
 app.use('*', express.static(path.resolve('../ostinohealth/client/dist')));
