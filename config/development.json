@@ -8,6 +8,10 @@
         "port": 587,
         "user": "AKIAIVCORE3NYKSQ3YWA",
         "pass": "AuuGUtU76w7NR73586WMUmmPFdiPMnuHcFV9rs9tGoje"
+    },
+    "paymentGateway": {
+        "workingKey": "139DEC83682E999A4E000F73D78AB572",
+        "accessCode": "AVAZ78FF42AH48ZAHA"
     }
 
 }

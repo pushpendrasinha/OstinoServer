@@ -11,6 +11,8 @@ var order = require('./routes/order');
 var user = require('./routes/user');
 var common = require('./routes/common');
 var address = require('./routes/address');
+var cart = require('./routes/cart');
+var payment = require('./routes/payment');
 
 var app = express();
 var allowCrossDomain = function(req, res, next) {
@@ -33,6 +35,8 @@ app.use('/api/user', user);
 app.use('/api/product', product);
 app.use('/api/common', common);
 app.use('/api/address', address);
+app.use('/api/cart', cart);
+app.use('/api/payment', payment);
 
 
 app.use('*', express.static(path.resolve('../ostinohealth/client/dist')));
