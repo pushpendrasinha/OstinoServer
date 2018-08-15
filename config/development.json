@@ -10,8 +10,10 @@
         "pass": "AuuGUtU76w7NR73586WMUmmPFdiPMnuHcFV9rs9tGoje"
     },
     "paymentGateway": {
+        "merchant_id": 176047,
         "workingKey": "139DEC83682E999A4E000F73D78AB572",
-        "accessCode": "AVAZ78FF42AH48ZAHA"
+        "accessCode": "AVAZ78FF42AH48ZAHA",
+        "iframe_api_endpoint": "https://test.ccavenue.com/transaction/transaction.do?command=initiateTransaction&merchant_id=${merchant_id}&encRequest=${encRequest}&access_code=${accessCode}"
     }
 
 }

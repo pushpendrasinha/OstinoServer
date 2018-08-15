@@ -1,9 +1,14 @@
 var mongoose = require('mongoose');
 var schema = mongoose.Schema({
-    name: { type: String, required: true },
-    email: { type: String, required: true },
-    contact: { type: String, required: true },
-    password: { type: String, required: true },
-});
+    customer_id: { type: String, required: true },
+    order_id: { type: String, required: true },
+    ordered_on: { type: String, required: true },
+    order_status: { type: String, required: true },
+    payment_done: { type: Boolean, required: true },
+    order_items: { type: Array, required: true },
+    order_total: { type: String, required: true },
+    order_delivered_on: { type: Date, required: false },
+    order_delivered_to: { type: JSON, required: true },
+},{collection: 'orders', versionKey: false});
 
 module.exports = mongoose.model('order',schema);

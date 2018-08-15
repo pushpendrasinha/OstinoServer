@@ -23,6 +23,8 @@
     "nodemailer-smtp-transport": "^2.7.4",
     "nodemon": "^1.17.5",
     "pug": "2.0.0-beta11",
-    "querystring": "^0.2.0"
+    "querystring": "^0.2.0",
+    "request": "^2.87.0",
+    "request-promise": "^4.2.2"
   }
 }

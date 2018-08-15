@@ -36,6 +36,7 @@ app.use('/api/product', product);
 app.use('/api/common', common);
 app.use('/api/address', address);
 app.use('/api/cart', cart);
+app.use('/api/orders', order);
 app.use('/api/payment', payment);
 
 
