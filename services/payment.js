@@ -40,7 +40,8 @@ module.exports = {
                 order_items: items
             }
             await new orderModel(order).save();
-            var formdata = `merchant_id=${config.get('paymentGateway:merchant_id')}&currency=INR&language=EN&redirect_url=http%3A%2F%2F127.0.0.1%3A3002%2Fapi%2Fpayment%2Fpaymentresponse&cancel_url: http%3A%2F%2F127.0.0.1%3A3002%2Fapi%2Fpayment%2Fpaymentresponse&amount=${cart.total}&order_id=${order_id}&integration_type: iframe_normal&customer_identifier=${userId}&delivery_name=${address.name}&delivery_address=${address.address}&delivery_city=${address.city}&delivery_state=${address.state}`
+           /* var formdata = `merchant_id=${config.get('paymentGateway:merchant_id')}&currency=INR&language=EN&redirect_url=http%3A%2F%2F127.0.0.1%3A3002%2Fapi%2Fpayment%2Fpaymentresponse&cancel_url: http%3A%2F%2F127.0.0.1%3A3002%2Fapi%2Fpayment%2Fpaymentresponse&amount=${cart.total}&order_id=${order_id}&integration_type: iframe_normal&customer_identifier=${userId}&delivery_name=${address.name}&delivery_address=${address.address}&delivery_city=${address.city}&delivery_state=${address.state}`*/
+            var formdata = `merchant_id=${config.get('paymentGateway:merchant_id')}&currency=INR&language=EN&redirect_url=${config.get('paymentGateway:redirect_url')}&cancel_url: ${config.get('paymentGateway:cancel_url')}&amount=${cart.total}&order_id=${order_id}&customer_identifier=${userId}&delivery_name=${address.name}&delivery_address=${address.address}&delivery_city=${address.city}&delivery_state=${address.state}&billing_name=${address.name}&billing_address=${address.address}&billing_city=${address.city}&billing_state=${address.state}&billing_zip=${address.pincode}&billing_email=aasheeshbareja@gmail.com&billing_country=India&billing_tel=${address.phone}`
                 console.log("formdata is " + formdata);
            return { url: paymentUtil.getIframeURL(formdata) };
             }
@@ -57,20 +58,19 @@ module.exports = {
             var ccavResponse = ccav.decrypt(encResponse, config.get("paymentGateway:workingKey"));
             console.log("response is " + JSON.stringify(ccavResponse, null, 2));
             var result = qs.parse(ccavResponse);
-            await new transactionModel(result).save();
-         /*  var order =  await orderModel.findOne({order_id: result.order_id});
-           order.ordered_on = new Date();
-           order.payment_done = true;*/
-         var order = {
-             ordered_on: result.trans_date,
-             payment_done: true
-         }
-        /// console.log("orderid is " + result.order_id);
-       //  var odr = await orderModel.findOne({order_id: result.order_id});
-        // console.log("odr is " + JSON.stringify(odr, null, 2));
-            await orderModel.updateOne({ order_id: result.order_id }, order);
-         // await order.save();
-           return ccavResponse;
+            if(result.order_status == 'Success') {
+                await new transactionModel(result).save();
+                var order = {
+                    ordered_on: result.trans_date,
+                    payment_done: true,
+                }
+
+                await orderModel.updateOne({ order_id: result.order_id }, order);
+                return { success: true, response: result }
+            } else {
+                console.log("order status is "  +result.order_status);
+               return  { success: false, response: result}
+            }
         } catch(e) {
             console.log("err in getResponse is " + e);
             return e;

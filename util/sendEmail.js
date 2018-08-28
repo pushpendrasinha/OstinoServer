@@ -15,13 +15,13 @@ var transporter = nodemailer.createTransport(smtpTransport({
     }
 }));
 
-function sendMail(message) {
+function sendMail(data) {
     return new Promise((resolve, reject) => {
         transporter.sendMail({
-            from: 'medthatheals@gmail.com',
-            to: 'surajitbanerjee@ostinohealth.com',
-            subject: 'Feedback',
-            html: message
+            from: data.from || 'medthatheals@gmail.com',
+            to: data.to || 'surajitbanerjee@ostinohealth.com',
+            subject: data.subject || 'Feedback',
+            html: data.message || data
 
         }, function (error, response) {
             if (error) {

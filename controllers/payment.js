@@ -13,7 +13,7 @@ module.exports = {
         try {
             var userId = req.userId;
            // delivery_address_id = req.body.address_id;
-            delivery_address_id = "5b60231d05d38b2ef4cc1aa8";
+            delivery_address_id = "5b767aefb06e842abc161f36";
             var result =   await paymentService.checkout(userId, delivery_address_id);
             res.status(200).send(result);
             //res.sendFile(path.resolve(__dirname + "/../public/page.html"));
@@ -25,16 +25,12 @@ module.exports = {
         },
     paymentResponse: async (req, res) => {
         console.log("payment response received " + JSON.stringify(req.body, null, 2));
-       // res.status(200).send({result: req.body})
-       // var ccavEncResponse = req.body;
-        req.on('data', function(response) {
-            console.log("data in paymentresponse is " + response);
-        })
         var result = await paymentService.getResponse(req.body.encResp);
-
-
-
+        res.render("verification", {transaction: result.response.tracking_id, bank_ref_no: result.response.bank_ref_no, order_id: result.response.order_id});
         console.log("response in controller " + JSON.stringify(result, null, 2));
 
+    },
+    test: async (req, res) => {
+        res.render('resetpassword');
     }
 }

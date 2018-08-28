@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors');
 var bodyParser = require('body-parser');
+var expressValidator = require('express-validator');
 
 var product = require('./routes/product');
 var order = require('./routes/order');
@@ -29,6 +30,12 @@ app.use(logger('dev'));
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(bodyParser.json({limit: '200mb'}));
+app.use(expressValidator());
+app.set('view engine', 'pug');
+app.set('views', './views');
+/*app.use('/template', express.static(path.join(__dirname, 'public')));
+app.use('/css', express.static(path.join(__dirname, 'public')));*/
+app.use('/css', express.static(path.join(__dirname, 'public/stylesheets')));
 app.use(express.static(path.resolve('../ostinohealth/client/dist')));
 
 app.use('/api/user', user);

@@ -13,5 +13,10 @@ router.get('/deleteAddress', authenticate, userController.addAddress);
 router.post('/updateAddress', authenticate,  userController.addAddress);
 router.get('/getaddresses', authenticate,  userController.getAddresses);
 router.post('/edit', authenticate, userController.editProfile);
+router.get('/verification', userController.verifyEmail);
+router.get('/requestresetpassword', userController.requestresetpassword);
+router.get('/reset/:token', userController.resetPassword);
+router.post('/resetpassword', userController.resetUserPassword);
+router.get('/test', userController.test);
 
 module.exports = router;

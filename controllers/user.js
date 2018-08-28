@@ -12,9 +12,11 @@ module.exports = {
     },
     register: async (req, res) => {
         console.log("in register function");
+        req.checkBody()
         var data = req.body;
         var result = await userService.register(data).catch((err) => {
-            console.log("err is " + err);
+            console.log("err in register " + JSON.stringify(err, null, 2));
+            res.status(200).send(result);
         });
         console.log("result in controller " + JSON.stringify(result));
         res.status(200).send(result);
@@ -70,6 +72,56 @@ var result =  await userService.changePassword(userId, credentials);
         var result =  await userService.getAddresses(userId);
         res.status(200).send(result);
 
+    },
+    verifyEmail: async (req, res) => {
+        console.log("verifyemail called");
+        var code = req.query.code;
+        console.log("code is " + code);
+        console.log("query in verifyEmail is " + JSON.stringify(req.query, null, 2));
+        var result = await userService.verifyEmail(code);
+        if(result.success) {
+            res.render('verification');
+        } else {
+            res.send("something went wrong");
+        }
+       // res.status(200).send("Your email address is verified");
+
+    },
+    requestresetpassword: async (req, res) => {
+        console.log("requestresetpassword api called.....");
+       var email = req.query.email;
+      // res.render();
+       var result = userService.requestresetpassword(email);
+       res.status(200).send(result);
+    },
+
+    resetPassword: async (req, res) => {
+        var token = req.params.token;
+        var result = await userService.resetpassword(token);
+        if(result.valid) {
+            res.render("resetpassword");
+        } else {
+            res.send("Invalid or expired Link")
+           // res.render("<h3>Invalid or expired link</h3>");
+        }
+
+
+    },
+    resetUserPassword: async (req, res) => {
+        console.log("resetUserPassword api called.....");
+        console.log("resetUserPassword body is " + JSON.stringify(req.body, null, 2));
+        var result =  await userService.resetUserPassword(req.body);
+        if(result.success) {
+            res.redirect("http://localhost:3002/ecom/login");
+        } else {
+            res.send("something went wrong.")
+        }
+       // res.render('resetpassword');
+    },
+
+    test: async (req, res) => {
+
+        res.render('resetpassword');
     }
 
 
