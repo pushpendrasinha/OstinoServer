@@ -4,6 +4,7 @@ const qs = require('querystring');
 var request = require('request-promise');
 var transactionModel = require("../models/transaction");
 var path = require('path');
+var config = require('../util/config-util').nodeConfig;
 
 console.log("dirname is " + __dirname);
 
@@ -12,8 +13,10 @@ module.exports = {
         console.log("in api +++++++++++++++++++++");
         try {
             var userId = req.userId;
+            var addressId = req.params.addressId;
            // delivery_address_id = req.body.address_id;
-            delivery_address_id = "5b767aefb06e842abc161f36";
+           // delivery_address_id = "5b767aefb06e842abc161f36";
+            delivery_address_id = addressId;
             var result =   await paymentService.checkout(userId, delivery_address_id);
             res.status(200).send(result);
             //res.sendFile(path.resolve(__dirname + "/../public/page.html"));
@@ -26,11 +29,11 @@ module.exports = {
     paymentResponse: async (req, res) => {
         console.log("payment response received " + JSON.stringify(req.body, null, 2));
         var result = await paymentService.getResponse(req.body.encResp);
-        res.render("verification", {transaction: result.response.tracking_id, bank_ref_no: result.response.bank_ref_no, order_id: result.response.order_id});
+        res.render("transaction-receipt", {transaction: result.response.tracking_id, bank_ref_no: result.response.bank_ref_no, order_id: result.response.order_id});
         console.log("response in controller " + JSON.stringify(result, null, 2));
 
     },
     test: async (req, res) => {
-        res.render('resetpassword');
+        res.render('verification', {url: "http://localhost:3002"});
     }
 }

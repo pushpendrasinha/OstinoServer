@@ -66,13 +66,13 @@ module.exports = {
                 <h2>Please confirm your email</h2>
                 <p style="font-size: 18px;">Thanks for signing up to Ostino! To set up your account, please confirm your email address by clicking the button below. </p>
                 <div  style="background-color: #990000;	padding: 10px;text-align: center;width: 40%;margin-top: 10px;margin-left: auto;margin-right: auto;font-size: 16px;cursor: pointer;border-radius: 3px;">
-                    <a href=http://localhost:3002/api/user/verification?code=${verify.hash} style="text-decoration: none;color:white;">Confirm email address</a>
+                    <a href=${config.nodeConfig.get('server_url')}/api/user/verification?code=${verify.hash} style="text-decoration: none;color:white;">Confirm email address</a>
                 </div>
             </div>
         </div>
         <div  style="text-align: center;padding: 20px;margin-left: auto;margin-right: auto;color:#404040;">
             <p>Button not working? Try using this link:</p>
-            <a href=http://localhost:3002/api/user/verification?code=${verify.hash} style="text-decoration: none;word-break: break-all;word-wrap: break-word;">http://localhost:3002/api/user/verification?code=${verify.hash}</a>
+            <a href=${config.nodeConfig.get('server_url')}/api/user/verification?code=${verify.hash} style="text-decoration: none;word-break: break-all;word-wrap: break-word;">${config.nodeConfig.get('server_url')}/api/user/verification?code=${verify.hash}</a>
             <p>You are receiving this email because you signed up to Ostino. If you did not make this request please contact <a href="mailto:contact@ostinohealth.com" style="color: #404040;">Ostino Support</a>  .</p>
         </div>
     </div>
@@ -166,13 +166,13 @@ module.exports = {
                 <h1>Password Reset</h1>
                 <p style="font-size: 18px;">You recently requested to reset your password for your Ostino account.Click the button below to reset it.</p>
                 <div style="background-color: #990000;	padding: 10px;text-align: center;width: 40%;margin-top: 10px;margin-left: auto;margin-right: auto;font-size: 16px;cursor: pointer;border-radius: 3px;">
-                    <a href=http://localhost:3002/api/user/reset/${token} style="text-decoration: none;color:white;">Reset my password</a>
+                    <a href=${config.nodeConfig.get('server_url')}/api/user/reset/${token} style="text-decoration: none;color:white;">Reset my password</a>
                 </div>
                 <p style="border-bottom: 1px solid #990000;padding: 20px;">If you did not request a password reset,please ignore this email or reply to let us know. </p>
 
                 <p>If you're having troble clicking the passowrd reset button,copy and paste the url below into your web browser.
                     <br><br>
-                    <a href=http://localhost:3002/api/user/reset/${token} style="text-decoration: none;word-break: break-all;word-wrap: break-word;">http://localhost:3002/api/user/reset/${token}</a></p>
+                    <a href=${config.nodeConfig.get('server_url')}/api/user/reset/${token} style="text-decoration: none;word-break: break-all;word-wrap: break-word;">${config.nodeConfig.get('server_url')}/api/user/reset/${token}</a></p>
             </div>
         </div>
     </div>
@@ -220,4 +220,4 @@ module.exports = {
 /*
 
 message: `<h3>Verify your email address</h3> <br> <p>Please click on below link to verify your email address</p> <br>
-               http://localhost:3002/api/user/verification?code=${verify.hash}`*/
+               ${config.nodeConfig.get('server_url')}/api/user/verification?code=${verify.hash}`*/

@@ -5,9 +5,9 @@ var authenticate = require('../middlewares/authentication');
 
 
 
-router.get('/checkoutpage', authenticate, paymentController.checkoutPage);
+router.get('/checkoutpage/:addressId', authenticate, paymentController.checkoutPage);
 router.post('/paymentresponse', paymentController.paymentResponse);
-router.get('/paymentresponse', paymentController.paymentResponse);
+/*router.get('/paymentresponse', paymentController.paymentResponse);*/
 router.get('/test', paymentController.test);
 
 module.exports = router;
