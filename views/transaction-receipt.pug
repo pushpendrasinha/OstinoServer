@@ -1,0 +1,26 @@
+doctype html
+html
+    head
+        title
+        meta(name='viewport', content='width=device-width, initial-scale=1')
+        link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css')
+        link(href='http://localhost:3002/css/verification.css', type='text/css', rel='stylesheet')
+        link(rel='shortcut icon', href='images/favicon.ico', type='image/x-icon')
+        link(rel='icon', href='images/favicon.ico', type='image/x-icon')
+    body
+        .container
+            .wrapper
+                .heading
+                    h2 YOUR ORDER HAS BEEN RECEIVED
+                .message-section
+                    h2 THANK YOU FOR YOUR PURCHASE
+                    p
+                        | Your Order # is: #{order_id}.
+                        br
+                        |                 Your Transaction # is: #{transaction}.
+                        br
+                        |                 Your Bank Reference Number is: #{bank_ref_no}.
+                        br
+                        |                 You will receive an order confirmation email with details of your order.
+                .button
+                    a(href='http://localhost:3002/ecom/products') CONTINUE SHOPPING
