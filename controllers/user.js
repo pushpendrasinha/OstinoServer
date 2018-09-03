@@ -1,5 +1,6 @@
 
 var userService = require("../services/usertest");
+var config = require('../util/config-util').nodeConfig;
 module.exports = {
     login: async (req, res) => {
         var email = req.body.email;
@@ -80,7 +81,7 @@ var result =  await userService.changePassword(userId, credentials);
         console.log("query in verifyEmail is " + JSON.stringify(req.query, null, 2));
         var result = await userService.verifyEmail(code);
         if(result.success) {
-            res.render('verification');
+            res.render('verification', {url: config.get('server_url')});
         } else {
             res.send("something went wrong");
         }
@@ -99,7 +100,7 @@ var result =  await userService.changePassword(userId, credentials);
         var token = req.params.token;
         var result = await userService.resetpassword(token);
         if(result.valid) {
-            res.render("resetpassword");
+            res.render("resetpassword", {url: config.get('server_url')});
         } else {
             res.send("Invalid or expired Link")
            // res.render("<h3>Invalid or expired link</h3>");

@@ -29,11 +29,13 @@ module.exports = {
     paymentResponse: async (req, res) => {
         console.log("payment response received " + JSON.stringify(req.body, null, 2));
         var result = await paymentService.getResponse(req.body.encResp);
-        res.render("transaction-receipt", {transaction: result.response.tracking_id, bank_ref_no: result.response.bank_ref_no, order_id: result.response.order_id});
+        res.render("transaction-receipt", {url: config.get('server_url'), transaction: result.response.tracking_id, bank_ref_no: result.response.bank_ref_no, order_id: result.response.order_id});
         console.log("response in controller " + JSON.stringify(result, null, 2));
 
     },
     test: async (req, res) => {
-        res.render('verification', {url: "http://localhost:3002"});
+       // res.render('verification', {url: "http://localhost:3002"});
+        res.render('verification', {url: config.get('server_url')});
+       // res.send("hello");
     }
 }
