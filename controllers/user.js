@@ -92,7 +92,7 @@ var result =  await userService.changePassword(userId, credentials);
         console.log("requestresetpassword api called.....");
        var email = req.query.email;
       // res.render();
-       var result = userService.requestresetpassword(email);
+       var result = await userService.requestresetpassword(email);
        res.status(200).send(result);
     },
 
