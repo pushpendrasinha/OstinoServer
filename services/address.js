@@ -10,8 +10,8 @@ module.exports = {
                 console.log("userId: " + userId);
                 console.log("addressId:" +  addressId);
                 console.log("address: " + JSON.stringify(address));
-               // var result =  await addressModel.updateOne({userId: userId, _id: addressId}, address);
-                var result =  await addressModel.updateOne({state: "Haryana"}, address);
+                var result =  await addressModel.updateOne({userId: userId, _id: addressId}, address);
+               // var result =  await addressModel.updateOne({state: "Haryana"}, address);
                 return { success: true, msg: "address updated successfully"}
             } else {
                 address.userId = userId;

@@ -60,6 +60,8 @@ module.exports = {
             var result = qs.parse(ccavResponse);
             if(result.order_status == 'Success') {
                 await new transactionModel(result).save();
+               var customer =  await orderModel.findOne({order_id: result.order_id });
+               await cartModel.deleteOne({userId: customer.customer_id});
                 var order = {
                     ordered_on: result.trans_date,
                     payment_done: true,

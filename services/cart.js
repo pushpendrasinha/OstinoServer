@@ -62,7 +62,9 @@ module.exports = {
                 console.log("getcartitems total" + total);
                 return {success: true,  items: docs, total: total, totalItems: docs.length}
                 //console.log("cartitems " + JSON.stringify(cartItems, null, 2));
-                }
+                } else {
+                return {success: true, total: 0, totalItems: 0}
+            }
 
         } catch (e) {
             console.log("err is " + e);
@@ -102,11 +104,16 @@ module.exports = {
     },
 
     getCartProducts: async (cartItems) => {
-        var items = cartItems.map((value) => {
+        /*var items = cartItems.map((value) => {
             return value.productId;
-        });
+        });*/
+        var items = [];
+        for(var i=0; i<cartItems.length; i++) {
+            items.push(cartItems[i].productId);
+        }
         //console.log("productIds " + items);
         var docs = await productModel.find({_id: {$in: items}}).lean().exec();
+        console.log("docs is " + docs);
         docs.forEach((elemnt) => {
             var result =  cartItems.filter((value) => {
                 return value.productId == elemnt._id
