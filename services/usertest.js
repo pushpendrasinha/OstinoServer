@@ -6,6 +6,7 @@ console.log("config is " + JSON.stringify(config.nodeConfig.get('mongo:url'), nu
 mongoose.connect(config.nodeConfig.get('mongo:url'));
 var userModel = require("../models/user");
 var verificationModel = require("../models/verification");
+var subscriptionModel = require("../models/subscription");
 var mailUtil = require("../util/sendEmail");
 // var secret = "med%ostino?R";
 
@@ -209,6 +210,62 @@ module.exports = {
 
            // console.log("decoded token is " + JSON.stringify(result, null, 2));
 
+        } catch(e) {
+            console.log("exception in token " + e);
+            return {success: false, msg: e};
+        }
+    },
+    subscribe: async (name, email) => {
+        try {
+            var token = jwt.sign({email: email}, config.nodeConfig.get('secret'), {
+                expiresIn: 86400 // expires in 24 hours
+            });
+            var data = {
+                from: 'contact@ostinohealth.com',
+                to: email,
+                subject: 'Email Subscription',
+                message: `<div class="container"  style="display: flex;align-items: center;min-height:  100vh;background-color: #bbb;overflow: hidden;
+">
+
+    <div class="wrapper" style="background-color: #bbb;width: 95%;margin-left: auto;margin-right: auto;">
+
+        <div class="box">
+            <div class="logo" style="text-align: center;padding: 20px;" >
+                <a href="https://www.ostinohealth.com/"><img class="logo" src="https://s3.ap-south-1.amazonaws.com/ostinohealth/static/logo/ostino_logo1.png" width="180px" height="30px"> </a>
+            </div>
+
+            <div class="box-content" style="text-align: center;background-color: white;border-radius: 3px;margin-left: auto;margin-right: auto;padding: 20px;">
+                <h3>Hi ${name},</h3>
+                <p style="font-size: 18px;">We have received a subscription request from this email address.  Please confirm it by clicking the button below.</p>
+                <div class="button" style="background-color: #990000;	padding: 10px;text-align: center;width: 40%;margin-top: 10px;margin-left: auto;margin-right: auto;font-size: 16px;cursor: pointer;border-radius: 3px;">
+                    <a href=${config.nodeConfig.get('server_url')}/api/user/subscription/${token} style="text-decoration: none;color:white;">Subscribe</a>
+                </div>
+                <p>If you still cannot subscribe, please copy this link and paste it in your browser :</p>
+
+                <a href=${config.nodeConfig.get('server_url')}/api/user/reset/${token} style="text-decoration: none;word-break: break-all;word-wrap: break-word;">${config.nodeConfig.get('server_url')}/api/user/subscription/${token}</a>
+
+                <p>Thank You </p>
+            </div>
+        </div>
+
+    </div>
+</div>`
+            }
+            mailUtil.sendMail(data);
+            return { success: true, msg: "verify mail to subscribe"};
+        } catch(e) {
+            return { success: false, msg: e};
+        }
+
+
+    },
+
+    subscription: async (token) => {
+        try {
+            var result =  await jwt.verify(token, config.nodeConfig.get('secret'));
+            console.log("decoded token is " + JSON.stringify(result, null, 2));
+            await new subscriptionModel({email: result.email}).save();
+            return {success: true};
         } catch(e) {
             console.log("exception in token " + e);
             return {success: false, msg: e};

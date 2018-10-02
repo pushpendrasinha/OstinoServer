@@ -123,6 +123,24 @@ var result =  await userService.changePassword(userId, credentials);
     test: async (req, res) => {
 
         res.render('resetpassword');
+    },
+
+    subscribe: async (req, res) => {
+        var name = req.body.name;
+        var email = req.body.email;
+        var result = await userService.subscribe(name, email);
+        res.status(200).send(result);
+    },
+
+    subscription: async (req, res) => {
+        var token = req.params.token;
+        var result = await userService.subscription(token);
+        if(result.success) {
+            res.render('subscription');
+        }
+         else {
+         res.send('something went wrong');
+        }
     }
 
 

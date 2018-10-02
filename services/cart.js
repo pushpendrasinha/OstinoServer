@@ -38,12 +38,14 @@ module.exports = {
                     return element.productId != productId
                 })
                 await cart.save();
-                var totalItems = cart.cartItems.length;
+             var result =   await module.exports.getCartItems(userId);
+             return {success: true,  data: result}
+               /* var totalItems = cart.cartItems.length;
                 var total = 0;
                 cart.cartItems.forEach((item) => {
                     total = total + item.price;
                 })
-                return {success: true,  items: cart.cartItems, total: total, totalItems: totalItems}
+                return {success: true,  items: cart.cartItems, total: total, totalItems: totalItems}*/
                 }
         } catch(e) {
             return {success: false,  msg: e}

@@ -18,5 +18,7 @@ router.get('/requestresetpassword', userController.requestresetpassword);
 router.get('/reset/:token', userController.resetPassword);
 router.post('/resetpassword', userController.resetUserPassword);
 router.get('/test', userController.test);
+router.post('/subscribe', userController.subscribe);
+router.get('/subscription/:token', userController.subscription);
 
 module.exports = router;
