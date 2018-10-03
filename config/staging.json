@@ -16,7 +16,7 @@
     "accessCode": "AVQJ02FI25AF92JQFA",
     "cancel_url": "http://testecom.ostinohealth.com/api/payment/paymentresponse",
     "redirect_url": "http://testecom.ostinohealth.com/api/payment/paymentresponse",
-    "iframe_api_endpoint": "https://test.ccavenue.com/transaction/transaction.do?command=initiateTransaction&merchant_id=${merchant_id}&encRequest=${encRequest}&access_code=${accessCode}"
+    "iframe_api_endpoint": "https://secure.ccavenue.com/transaction/transaction.do?command=initiateTransaction&merchant_id=${merchant_id}&encRequest=${encRequest}&access_code=${accessCode}"
   }
 
 }
