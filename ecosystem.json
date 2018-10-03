@@ -1,7 +1,7 @@
 {
   "apps" : [{
 
-    "name"        : "testecom",
+    "name"        : "ostino_master",
     "script"      : "bin/www",
 
     "watch"       : true,
