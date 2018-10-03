@@ -1,0 +1,21 @@
+{
+  "apps" : [{
+
+    "name"        : "testecom",
+    "script"      : "bin/www",
+
+    "watch"       : true,
+
+    "merge_logs"  : true,
+
+    "env": {
+      "NODE_ENV": "development"
+    },
+    "env_production" : {
+      "NODE_ENV": "production"
+    },
+    "env_staging" : {
+      "NODE_ENV" : "staging"
+    }
+  }]
+}
