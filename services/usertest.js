@@ -242,7 +242,7 @@ module.exports = {
                 </div>
                 <p>If you still cannot subscribe, please copy this link and paste it in your browser :</p>
 
-                <a href=${config.nodeConfig.get('server_url')}/api/user/reset/${token} style="text-decoration: none;word-break: break-all;word-wrap: break-word;">${config.nodeConfig.get('server_url')}/api/user/subscription/${token}</a>
+                <a href=${config.nodeConfig.get('server_url')}/api/user/subscription/${token} style="text-decoration: none;word-break: break-all;word-wrap: break-word;">${config.nodeConfig.get('server_url')}/api/user/subscription/${token}</a>
 
                 <p>Thank You </p>
             </div>
@@ -262,6 +262,7 @@ module.exports = {
 
     subscription: async (token) => {
         try {
+            console.log("in subscription service..");
             var result =  await jwt.verify(token, config.nodeConfig.get('secret'));
             console.log("decoded token is " + JSON.stringify(result, null, 2));
             await new subscriptionModel({email: result.email}).save();
