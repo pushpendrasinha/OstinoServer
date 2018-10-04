@@ -12,8 +12,8 @@
   },
   "paymentGateway": {
     "merchant_id": 176047,
-    "workingKey": "4DF4D7D1A865FAFCB46BB8D7C925F7D3",
-    "accessCode": "AVQJ02FI25AF92JQFA",
+    "workingKey": "41791F9D69ECB88AFCF132DDB02502AE",
+    "accessCode": "AVBT80FJ84AH32TBHA",
     "cancel_url": "http://testecom.ostinohealth.com/api/payment/paymentresponse",
     "redirect_url": "http://testecom.ostinohealth.com/api/payment/paymentresponse",
     "iframe_api_endpoint": "https://secure.ccavenue.com/transaction/transaction.do?command=initiateTransaction&merchant_id=${merchant_id}&encRequest=${encRequest}&access_code=${accessCode}"
