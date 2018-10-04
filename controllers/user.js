@@ -135,6 +135,7 @@ var result =  await userService.changePassword(userId, credentials);
     subscription: async (req, res) => {
         var token = req.params.token;
         var result = await userService.subscription(token);
+        console.log("response from subscription service.." + JSON.stringify(result, null, 2));
         if(result.success) {
             res.render('subscription');
         }
