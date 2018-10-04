@@ -2,7 +2,7 @@
     "server_url": "https://ostinohealth.com",
     "secret": "med%ostino?R",
     "mongo": {
-        "url": "mongodb://ostino:ostino123@localhost:27017/Ostinohealth"
+        "url": "mongodb://localhost:27017/Ostinohealth"
     },
     "smtpserver": {
         "host": "email-smtp.us-east-1.amazonaws.com",
