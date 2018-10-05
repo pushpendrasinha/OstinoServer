@@ -29,8 +29,9 @@ module.exports = {
     paymentResponse: async (req, res) => {
         console.log("payment response received " + JSON.stringify(req.body, null, 2));
         var result = await paymentService.getResponse(req.body.encResp);
+        console.log("response from payment service " + JSON.stringify(result, null, 2));
         res.render("transaction-receipt", {url: config.get('server_url'), transaction: result.response.tracking_id, bank_ref_no: result.response.bank_ref_no, order_id: result.response.order_id});
-        console.log("response in controller " + JSON.stringify(result, null, 2));
+       // console.log("response in controller " + JSON.stringify(result, null, 2));
 
     },
     test: async (req, res) => {
