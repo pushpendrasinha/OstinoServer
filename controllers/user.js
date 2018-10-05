@@ -100,7 +100,7 @@ var result =  await userService.changePassword(userId, credentials);
         var token = req.params.token;
         var result = await userService.resetpassword(token);
         if(result.valid) {
-            res.render("resetpassword", {url: config.get('server_url')});
+            res.render("resetpassword", {url: `${config.get('server_url')}/api/user/resetpassword`});
         } else {
             res.send("Invalid or expired Link")
            // res.render("<h3>Invalid or expired link</h3>");
@@ -113,7 +113,8 @@ var result =  await userService.changePassword(userId, credentials);
         console.log("resetUserPassword body is " + JSON.stringify(req.body, null, 2));
         var result =  await userService.resetUserPassword(req.body);
         if(result.success) {
-            res.redirect("http://localhost:3002/ecom/login");
+           // res.redirect("http://localhost:3002/ecom/login");
+            res.redirect(`${config.get('server_url')}/ecom/login`);
         } else {
             res.send("something went wrong.")
         }
