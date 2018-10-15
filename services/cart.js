@@ -12,18 +12,29 @@ module.exports = {
             console.log("usercart is " + userCart);
             var totalItems = 0;
             if(userCart) {
-                userCart.cartItems.push({productId: productId, quantity: 1});
+                var match = userCart.cartItems.filter((element) => {
+                    return element.productId == productId;
+                })
+                console.log("match is " + match);
                 totalItems = userCart.cartItems.length;
-                await userCart.save();
-            } else {
+                if(match.length == 0) {
+                    userCart.cartItems.push({productId: productId, quantity: 1});
+                    await userCart.save();
+                    totalItems = userCart.cartItems.length;
+                    return {success: true, msg: "Added to cart", totalItems: totalItems};
+                } else {
+                    return {success: true, msg: "already in cart", totalItems: totalItems};
+                }
+                } else {
                 var obj = {
                     userId: userId,
                     cartItems: [{productId: productId, quantity: 1}]
                 }
                 totalItems = 1;
                 await new cartModel(obj).save();
+                return {success: true, msg: "product added successfully", totalItems: totalItems};
             }
-           return {success: true, msg: "product added successfully", totalItems: totalItems};
+
         } catch (e) {
             console.log("err in addproduct is " + e);
             return {success: false, msg: e};
@@ -60,9 +71,21 @@ module.exports = {
            // console.log("cart in getCartItems is " + JSON.stringify(cart, null, 2));
             if(cart) {
              var docs = await module.exports.getCartProducts(cart.cartItems);
+             console.log("docs in getCartItems " + JSON.stringify(docs, null, 2));
              var total = module.exports.billTotal(docs);
                 console.log("getcartitems total" + total);
-                return {success: true,  items: docs, total: total, totalItems: docs.length}
+
+               // total = total + delivery_charges;
+                let delivery_charges;
+               var paintings =  docs.filter((value) => {
+                    return value.type == "painting";
+                })
+                if(paintings.length == 0) {
+                     delivery_charges = total < 2000 ?  100 : 0;
+                } else {
+                    delivery_charges = (paintings.length * 2000);
+                }
+                return {success: true,  items: docs, total: total.toFixed(2), amount_payable:(total + delivery_charges).toFixed(2), totalItems: docs.length, delivery_charges: delivery_charges.toFixed(2)}
                 //console.log("cartitems " + JSON.stringify(cartItems, null, 2));
                 } else {
                 return {success: true, total: 0, totalItems: 0}
