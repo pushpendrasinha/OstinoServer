@@ -81,7 +81,8 @@ module.exports = {
                     return value.type == "painting";
                 })
                 if(paintings.length == 0) {
-                     delivery_charges = total < 2000 ?  100 : 0;
+                    // delivery_charges = total < 2000 ?  100 : 0;
+                     delivery_charges = total < 2000 ?  1 : 0;
                 } else {
                     delivery_charges = (paintings.length * 2000);
                 }
@@ -138,12 +139,13 @@ module.exports = {
         }
         //console.log("productIds " + items);
         var docs = await productModel.find({_id: {$in: items}}).lean().exec();
-        console.log("docs is " + docs);
+        console.log("docs is " + JSON.stringify(docs, null, 2));
         docs.forEach((elemnt) => {
             var result =  cartItems.filter((value) => {
                 return value.productId == elemnt._id
             })
             elemnt.quantity = result[0].quantity;
+            elemnt.price = Number(elemnt.price).toFixed(2);
             })
         return docs;
     }
