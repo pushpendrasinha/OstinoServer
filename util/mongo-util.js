@@ -1,6 +1,6 @@
 
 var mongoClient = require('mongodb').MongoClient;
-const url = 'mongodb://localhost:27017/Ostinohealth_ecom';
+const url = 'mongodb://localhost:27017/Ostinohealth';
 
 module.exports = {
     createDatabase : (dbName,custName)=>{

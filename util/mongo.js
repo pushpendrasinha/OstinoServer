@@ -2,7 +2,7 @@
 //var mongoClient = require('mongodb').MongoClient;
 var mongoose = require('mongoose');
 var userModel = require("../models/user");
-const url = 'mongodb://localhost:27017/Ostinohealth_ecom';
+const url = 'mongodb://localhost:27017/Ostinohealth';
 mongoose.connect(url);
 module.exports = {
 
