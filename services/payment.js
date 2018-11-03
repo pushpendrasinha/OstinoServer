@@ -35,7 +35,7 @@ module.exports = {
                 customer_id: userId,
                 order_status: "Pending",
                 order_delivered_to: address,
-                order_total: cart.total,
+                order_total: cart.amount_payable,
                 payment_done: false,
                 ordered_on: new Date(),
                 order_items: items
